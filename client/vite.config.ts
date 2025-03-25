@@ -6,7 +6,13 @@ import path from 'path'
 export default defineConfig({
   plugins: [preact()],
   server: {
-    host: true
+    watch: {
+      usePolling: true,  // Required for Docker file system watching
+    },
+    hmr: {
+      clientPort: 5173,  // Important for WebSocket connection
+    },
+    host: true,  // Bind to 0.0.0.0
   },
   resolve: {
     alias: {

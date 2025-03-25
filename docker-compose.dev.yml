@@ -36,14 +36,17 @@ services:
     restart: unless-stopped
     ports:
       - "5173:5173"
+    env_file:
+      - ./client/.env
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./client:/app
       - /app/node_modules
+      - /app/public
     networks:
       - todo-app
-    environment:
-      - VITE_API_URL=http://localhost:4000
-    command: npm run dev -- --host
+    command: npm run dev -- --host 0.0.0.0 --port 5173
     depends_on:
       - api
 
